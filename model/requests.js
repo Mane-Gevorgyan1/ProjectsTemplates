@@ -1,8 +1,8 @@
 const { sequelize } = require('./sequelizeConfig')
 const { Model, DataTypes } = require("sequelize")
-class Products extends Model { }
+class Requests extends Model { }
 
-Products.init({
+Requests.init({
 
     id: {
         type: DataTypes.INTEGER,
@@ -10,15 +10,14 @@ Products.init({
         autoIncrement: true,
     },
     name: DataTypes.STRING,
+    email: DataTypes.STRING,
+    phone: DataTypes.STRING,
     description: DataTypes.STRING,
-    price: DataTypes.INTEGER,
-    categoryId: DataTypes.INTEGER,
-    hasWebsite: DataTypes.BOOLEAN,
-    hasApplication: DataTypes.BOOLEAN,
+    productId: DataTypes.INTEGER,
 }, {
-    modelName: "products",
+    modelName: "requests",
     sequelize,
 })
-Products.sync();
+Requests.sync();
 
-module.exports = { Products }   
+module.exports = { Requests }     

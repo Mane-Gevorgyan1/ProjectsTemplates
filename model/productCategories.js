@@ -13,7 +13,6 @@ ProductCategories.init({
     productId: DataTypes.STRING,
 
 }, {
-
     modelName: "productcategories",
     sequelize,
 })

@@ -1,18 +1,19 @@
+const { sequelize } = require('./sequelizeConfig')
 const { Model, DataTypes } = require("sequelize")
-const {sequelize} = require('./sequelizeConfig')
+class Photos extends Model { }
 
-class Categories extends Model { }
-Categories.init({
+Photos.init({
     id: {
         type: DataTypes.INTEGER,
         primaryKey: true,
         autoIncrement: true,
     },
     name: DataTypes.STRING,
+    productId: DataTypes.INTEGER
 }, {
-    modelName: "categories",
+    modelName: "photos",
     sequelize,
 })
-Categories.sync();
+Photos.sync()
 
-module.exports = { Categories }
+module.exports = { Photos }   

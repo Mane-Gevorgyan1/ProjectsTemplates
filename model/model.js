@@ -18,33 +18,27 @@ db.sequelize = sequelize;
 
 db.categories = require('./categories')
 db.products = require('./products')
-db.productCategories = require('./productCategories') 
-
-db.categories.Categories.belongsToMany(db.products.Products, {
-    through: 'productcategories',
-    foreignKey: 'categoryId'
-})
+db.productCategories = require('./productCategories')
+db.photos = require('./photos')
+db.requests = require('./requests')
 
 db.products.Products.belongsToMany(db.categories.Categories, {
     through: 'productcategories',
     foreignKey: 'productId'
 })
-module.exports =  db ;
+db.categories.Categories.belongsToMany(db.products.Products, {
+    through: 'productcategories',
+    foreignKey: 'categoryId'
+})
 
-// module.exports = db
+db.products.Products.hasMany(db.photos.Photos, { as: "photos" })
+db.photos.Photos.belongsTo(db.products.Products, {
+    foreignKey: 'productId'
+})
 
+db.products.Products.hasMany(db.requests.Requests, { as: "request" })
+db.requests.Requests.belongsTo(db.products.Products, {
+    foreignKey: 'productId'
+})
 
-
-
-
-
-
-
-
-// categories (inch tesak sayt a)
-// products   foreign key - category_id   web uni/chuni, mobile uni/chuni
-// many to many
-// requests
-
-// name, description, price, shat nkarner, 
-// product photo
+module.exports = db;

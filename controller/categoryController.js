@@ -4,14 +4,25 @@ const Categories = db.categories.Categories
 class CategoryController {
 
     static async createCategories(req, res) {
-        if (!req.body.category) {
-            res.send({ sucess: false, message: 'Category field is required' })
+        if (!req.body.name) {
+            res.send({ sucess: false, message: 'name field is required' })
         } else {
-            const category = await Categories.create({ ...req.body })
-            res.send({ sucess: true, message: 'Category created', category })
+            await Categories.create({ ...req.body }).then((category) => {
+                res.send({ sucess: true, message: 'Category created', category })
+            }).catch((error) => {
+                res.send({ sucess: false, message: 'Something happend in the server', error })
+            })
         }
+    }
+
+    static async getCategories(req, res) {
+        await Categories.findAll().then(request => {
+            res.send({ success: true, request })
+        }).catch(error => {
+            res.send({ success: false, message: 'Something happened in the server', error })
+        })
     }
 
 }
 
-module.exports = CategoryController;      
+module.exports = CategoryController;        
