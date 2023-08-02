@@ -33,7 +33,7 @@ router.post('/createRequest', RequestController.createRequest)
 
 router.get('/getUsers', UsersController.getUsers)
 router.post('/register', UsersController.register)
-router.post('/login',  passport.authenticate("local"), UsersController.login)
+router.post('/login', passport.authenticate("local"), UsersController.login)
 router.post('/editRoleId', UsersController.editRoleId)
 
 module.exports = router

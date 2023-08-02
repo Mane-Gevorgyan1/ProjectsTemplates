@@ -11,9 +11,13 @@ module.exports = function (passport) {
                     bcrypt.compare(password, user.password, (err, result) => {
                         if (err) throw err;
                         if (result === true) {
-                            return done(null, user);
+                            if (user.roleId === 3) {
+                                return done(null, { message: 'no access', id: user.id })
+                            } else {
+                                return done(null, user);
+                            }
                         } else {
-                            return done(null, false);
+                            return done(null, false)
                         }
                     })
                 } else {
@@ -22,7 +26,7 @@ module.exports = function (passport) {
             })
         })
 
-    );
+    )
 
     passport.serializeUser((user, cb) => {
         cb(null, user.id)
