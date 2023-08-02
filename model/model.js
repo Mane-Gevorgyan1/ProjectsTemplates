@@ -21,6 +21,7 @@ db.products = require('./products')
 db.productCategories = require('./productCategories')
 db.photos = require('./photos')
 db.requests = require('./requests')
+db.users = require('./users')
 
 db.products.Products.belongsToMany(db.categories.Categories, {
     through: 'productcategories',

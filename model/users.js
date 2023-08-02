@@ -1,22 +1,25 @@
 const { sequelize } = require('./sequelizeConfig')
 const { Model, DataTypes } = require("sequelize")
-class Requests extends Model { }
+class Users extends Model { }
 
-Requests.init({
+Users.init({
     id: {
         type: DataTypes.INTEGER,
         primaryKey: true,
         autoIncrement: true,
     },
     name: DataTypes.STRING,
+    surname: DataTypes.STRING,
     email: DataTypes.STRING,
-    phone: DataTypes.STRING,
-    description: DataTypes.STRING,
-    productId: DataTypes.INTEGER,
+    password: DataTypes.STRING,
+    roleId: {
+        type: DataTypes.INTEGER,
+        defaultValue: 3
+    }
 }, {
-    modelName: "requests",
+    modelName: "users",
     sequelize,
 })
-Requests.sync();
+Users.sync()
 
-module.exports = { Requests }     
+module.exports = { Users }

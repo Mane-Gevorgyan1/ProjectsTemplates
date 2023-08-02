@@ -1,5 +1,14 @@
 const db = require('../model/model')
 const Requests = db.requests.Requests
+const nodemailer = require('nodemailer')
+
+const transporter = nodemailer.createTransport({
+    service: 'gmail',
+    auth: {
+        user: process.env.EMAIL,
+        pass: process.env.PASSWORD
+    }
+});
 
 class RequestController {
 
@@ -15,10 +24,22 @@ class RequestController {
         } else if (!req.body.productId) {
             res.send({ sucess: false, message: 'productId field is required' })
         } else {
-            await Requests.create({ ...req.body }).then((async request => {
-                res.send({ success: true, message: 'Request created', request })
-            })).catch(error => {
-                res.send({ success: false, message: 'Something happened in the server', error })
+            const message = {
+                from: process.env.EMAIL,
+                to: req.body.email,
+                subject: 'Sending Email using Node.js',
+                html: `${req.body.description}`
+            };
+            transporter.sendMail(message, async (err, info) => {
+                if (err) {
+                    res.send({ message: "email is invalid", err });
+                } else {
+                    await Requests.create({ ...req.body }).then((async request => {
+                        res.send({ success: true, message: 'Request created', request })
+                    })).catch(error => {
+                        res.send({ success: false, message: 'Something happened in the server', error })
+                    })
+                }
             })
         }
     }

@@ -3,7 +3,6 @@ const { Model, DataTypes } = require("sequelize")
 class Products extends Model { }
 
 Products.init({
-
     id: {
         type: DataTypes.INTEGER,
         primaryKey: true,

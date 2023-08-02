@@ -7,6 +7,7 @@ const router = express.Router()
 
 const multer = require('multer')
 const RequestController = require("../controller/requestController")
+const UsersController = require("../controller/userController")
 
 const storage = multer.diskStorage({
     destination: function (req, file, cb) {
@@ -20,17 +21,20 @@ const storage = multer.diskStorage({
 
 const upload = multer({ storage })
 
-router.post('/createCategories', CategoryController.createCategories)
 router.get('/getCategories', CategoryController.getCategories)
+router.post('/createCategy', CategoryController.createCategory)
+router.post('/editCategory', CategoryController.editCategory)
 
-router.post('/createProduct', upload.array("photos"), ProductController.createProduct)
 router.get('/getProducts', ProductController.getProducts)
+router.post('/createProduct', upload.array("photos"), ProductController.createProduct)
+router.post('/editProduct', upload.array("photos"), ProductController.editProduct)
 
-router.post('/createRequest', RequestController.createRequest)
 router.get('/getRequests', RequestController.getRequests)
+router.post('/createRequest', RequestController.createRequest)
 
-// update
-// uxarkel mail-in
-// user
+router.get('/getUsers', UsersController.getUsers)
+router.post('/register', UsersController.register)
+router.post('/login', UsersController.login)
+router.post('/editRoleId', UsersController.editRoleId)
 
 module.exports = router
