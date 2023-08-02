@@ -1,9 +1,9 @@
 const express = require("express")
 const CategoryController = require("../controller/categoryController")
 const ProductController = require("../controller/productController")
+const passport = require('passport')
+require('../config/passportConfig')(passport)
 const router = express.Router()
-
-/** Multer */
 
 const multer = require('multer')
 const RequestController = require("../controller/requestController")
@@ -18,7 +18,6 @@ const storage = multer.diskStorage({
         cb(null, name)
     }
 })
-
 const upload = multer({ storage })
 
 router.get('/getCategories', CategoryController.getCategories)
@@ -34,7 +33,7 @@ router.post('/createRequest', RequestController.createRequest)
 
 router.get('/getUsers', UsersController.getUsers)
 router.post('/register', UsersController.register)
-router.post('/login', UsersController.login)
+router.post('/login',  passport.authenticate("local"), UsersController.login)
 router.post('/editRoleId', UsersController.editRoleId)
 
 module.exports = router

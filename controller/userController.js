@@ -46,29 +46,8 @@ class UsersController {
     }
 
     static async login(req, res) {
-        if (!req.body.email) {
-            res.send({ sucess: false, message: 'email field is required' })
-        } else if (!(/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(req.body.email))) {
-            res.send({ sucess: false, message: 'email must be a valid email' })
-        } else if (!req.body.password) {
-            res.send({ sucess: false, message: 'password field is required' })
-        } else if (req.body.password.length < 6) {
-            res.send({ success: false, message: 'password cannot be less than 6 digits' })
-        } else {
-            await Users.findOne({
-                where: {
-                    email: req.body.email,
-                }
-            }).then(user => {
-                if (bcrypt.compareSync(req.body.password, user.password)) {
-                    res.send({ success: true, message: 'successfull login', user })
-                } else {
-                    res.send({ success: false, message: 'invalid email or password' })
-                }
-            }).catch(error => {
-                res.send({ sucess: false, message: 'Something happened in the server', error })
-            })
-        }
+        // vorpes login partadir uxarkum enq username
+        res.send({ user: req.user })
     }
 
     static async editRoleId(req, res) {
